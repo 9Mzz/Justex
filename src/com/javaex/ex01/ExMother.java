@@ -1,19 +1,29 @@
 package com.javaex.ex01;
 
-public class ExMother {
-////////////////////////////////////////////////////////////////
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-public void land() {
-	System.out.println("착륙합니다.");
-}
-public void fly() {
-	System.out.println("일반비행합니다.");
-}
-public void takeoff() {
-	System.out.println("이륙합니다.");
-}
+import echo.ServerThread;
+
+public class ExMother {
+
+	////////////////////////////////////////////////////////////////
+
+	public static void main(String[] args) throws IOException {
+		
+		ServerSocket serversocket = new ServerSocket();
+		serversocket.bind(new InetSocketAddress("192.168.0.56", 10001));
+		
+		while(true) {
+			Socket socket = serversocket.accept();
+			Thread thread = new Exson(); 
+			thread.start();
+		}
+		
 	
-	
-	
+	}
+		
 ////////////////////////////////////////////////////////////////
 }

@@ -1,21 +1,64 @@
 package com.javaex.ex01;
 
-public class Exson extends ExMother {
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
+public class Exson extends Thread {
 	/////////////////////////////////////////////////////////////////////
 
-	public static final int normal = 1;
-	public static final int supersonic = 2;
+			private Socket socket;
+			//생성자
+			public Exson(Socket socket) {
+				this.socket = socket;
+			}
+			//메소드 g/s
 
-	public int flyMode = normal;
+			
+			//메소드 일반
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				System.out.println("연결됨");
+				try {
+					InputStream is = socket.getInputStream();
+					InputStreamReader isr = new InputStreamReader(is);
+					BufferedReader br = new BufferedReader(isr);
+					
+					OutputStream os = socket.getOutputStream();
+					OutputStreamWriter osw = new OutputStreamWriter(os);
+					BufferedWriter bw = new BufferedWriter(osw);
+					
+					while(true) {
+						String msg = bw.newLine();
+						if(msg ==null) {
+							System.out.println("클라이언트 종료키 입력");
+							break;
+						}
+						System.out.println("받은메세지: "+msg);
 
-	public void fly() {
-		if (flyMode == supersonic) {
-			System.out.println("초음속 비행합니다.");
-		} else {
-			//Airplane객체의 fly 메소드 
-			super.fly();
-		}
-	}
-
+						bw.write(msg);
+						bw.newLine();
+						bw.flush();
+						
+					}
+					br.close();
+					bw.close();
+					socket.close();
+					
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+	
+	
 	/////////////////////////////////////////////////////////////////////
 }
