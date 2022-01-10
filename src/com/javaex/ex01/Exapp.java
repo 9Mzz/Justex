@@ -1,20 +1,14 @@
 package com.javaex.ex01;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Exapp {
 	public static void main(String[] args)  {
 ////////////////////////////////////////////////////////
-		Scanner sc = new Scanner(System.in);
+		Week today = null;
+		Calendar cal = Calender.getIns
 		
-		System.out.println("점수: ");
-		int num = sc.nextInt();
-		System.out.println(num);
-		
-		
-		
-		
-		sc.close();
 		
 ////////////////////////////////////////////////////////
 	}
